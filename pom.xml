@@ -6,27 +6,27 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- ✅ Spring Boot Parent -->
+    <!-- Spring Boot Parent -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
+        <version>3.3.2</version>
         <relativePath/>
     </parent>
 
-    <!-- ✅ Project Info -->
+    <!-- Project Info -->
     <groupId>com.rajesh</groupId>
     <artifactId>commercehub-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>commercehub-backend</name>
     <description>CommerceHub Backend Application</description>
 
-    <!-- ✅ Java Version -->
+    <!-- Java Version -->
     <properties>
         <java.version>17</java.version>
     </properties>
 
-    <!-- ✅ Dependencies -->
+    <!-- Dependencies -->
     <dependencies>
 
         <!-- 🔹 Web -->
@@ -45,6 +45,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        
+        <!-- 🔹 Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- 🔹 Validation -->
@@ -78,12 +84,27 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
+        
+       <!-- 🔹 Swagger -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
 
         <!-- 🔹 MapStruct -->
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>1.5.5.Final</version>
+           <groupId>org.mapstruct</groupId>
+           <artifactId>mapstruct</artifactId>
+           <version>1.5.5.Final</version>
+       </dependency>
+
+       <dependency>
+           <groupId>org.mapstruct</groupId>
+           <artifactId>mapstruct-processor</artifactId>
+           <version>1.5.5.Final</version>
+           <scope>provided</scope>
         </dependency>
 
         <!-- 🔹 Lombok -->
@@ -103,7 +124,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- ✅ Test Dependencies -->
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -112,7 +133,7 @@
 
     </dependencies>
 
-    <!-- ✅ Build -->
+    <!-- Build -->
     <build>
         <plugins>
 

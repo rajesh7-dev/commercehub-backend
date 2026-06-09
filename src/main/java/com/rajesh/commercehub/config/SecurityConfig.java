@@ -41,14 +41,24 @@ public class SecurityConfig {
 	            		.accessDeniedHandler(accessDeniedHandler) //It is triggered when Authorization fails
 	            )
 	            .authorizeHttpRequests(auth -> auth
+	            		
+	            	.requestMatchers(    //swagger
+	                    	    "/v3/api-docs/**",
+	                    	    "/swagger-ui/**",
+	                    	    "/swagger-ui.html"
+	                    	).permitAll()	
+	            	// Actuator
+	            	.requestMatchers("/actuator/**").permitAll() //health -> public
+	            	.requestMatchers("/actuator/**").hasRole("ADMIN")//Other endpoints -> admin only 
 	                .requestMatchers("/api/auth/register" , "/api/auth/login")
 	                .permitAll()  //allowing register/login
 	                
                     .requestMatchers("/user/**").hasRole("USER")
                     .requestMatchers("/seller/**").hasRole("SELLER")
                     .requestMatchers("/admin/**").hasRole("ADMIN")
+                    
 
-	                
+                     //other APIs
 	                .anyRequest().authenticated()
 	            )
 	            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class );

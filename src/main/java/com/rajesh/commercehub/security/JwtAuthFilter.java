@@ -24,6 +24,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {// For every request we
 
     @Autowired
     private JwtUtil jwtUtil;
+    
+    
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) {
+	    String path = request.getServletPath();
+
+	    return path.startsWith("/v3/api-docs") ||
+	           path.startsWith("/swagger-ui") ||
+	           path.equals("/swagger-ui.html");
+	}
+	
+	
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -31,6 +43,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {// For every request we
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+    
     	
         // Getting Authorization header
         String authHeader = request.getHeader("Authorization");
@@ -41,6 +54,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {// For every request we
         String role = null;
 
         System.out.println("authHeader :" + authHeader);
+        
         
         
         // Checking if header contains Bearer token
@@ -78,7 +92,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {// For every request we
     }
 
 
-	
-	
+ 
 
 }

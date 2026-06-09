@@ -1,8 +1,11 @@
 package com.rajesh.commercehub.auth.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rajesh.commercehub.auth.dto.AuthResponse;
 import com.rajesh.commercehub.auth.dto.LoginRequest;
@@ -14,6 +17,7 @@ import com.rajesh.commercehub.auth.repository.RoleRepository;
 import com.rajesh.commercehub.auth.repository.UserRepository;
 import com.rajesh.commercehub.auth.service.AuthService;
 import com.rajesh.commercehub.enums.RoleType;
+import com.rajesh.commercehub.mapper.UserMapper;
 import com.rajesh.commercehub.security.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +26,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService{
+	
+	
+	private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
+
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -36,7 +44,10 @@ public class AuthServiceImpl implements AuthService{
 	private final JwtUtil jwtUtil; 
 	
 	
-
+	private final UserMapper userMapper;
+	
+	
+	@Transactional
 	@Override
 	public UserResponse register(RegisterRequest request) {
 
@@ -45,10 +56,12 @@ public class AuthServiceImpl implements AuthService{
     if(userRepository.existsByEmail(request.getEmail())) {
         throw new RuntimeException("Email already exists");
     }
- 
+  
+    log.info("Registering user with email {}", request.getEmail());
+
 
       //Get role
-    Role role = roleRepository.findByName(RoleType.USER)
+    Role role = roleRepository.findByName(RoleType.SELLER)
             .orElseThrow(() -> new RuntimeException("Role not found"));
 
 		
@@ -67,15 +80,8 @@ public class AuthServiceImpl implements AuthService{
      //Save
      User savedUser = userRepository.save(user);
 
-     //Return response
-     return UserResponse.builder()
-               .id(savedUser.getId())
-               .firstName(savedUser.getFirstName())
-               .lastName(savedUser.getLastName())
-               .email(savedUser.getEmail())
-               .username(savedUser.getUsername())
-               .role(savedUser.getRole().getName().name())
-               .build();
+     //Entity → DTO
+     return userMapper.toDto(savedUser);
 
 		
 	}

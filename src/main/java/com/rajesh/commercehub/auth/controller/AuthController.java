@@ -13,6 +13,8 @@ import com.rajesh.commercehub.auth.dto.LoginRequest;
 import com.rajesh.commercehub.auth.dto.RegisterRequest;
 import com.rajesh.commercehub.auth.dto.UserResponse;
 import com.rajesh.commercehub.auth.service.AuthService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 
@@ -26,7 +28,7 @@ public class AuthController {
 	
 	
 	@PostMapping("/register")
-	public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest request) {
+	public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
 	    return ResponseEntity.ok(authService.register(request));
 	}
 	

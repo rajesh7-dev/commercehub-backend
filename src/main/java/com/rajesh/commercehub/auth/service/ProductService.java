@@ -13,6 +13,10 @@ public interface ProductService {
 
     List<ProductResponse> getAllProducts();
 
+	ProductResponse updateProduct(Long id, ProductRequest request, String username);
+
+	void deleteProduct(Long id, String username);
+
 	
 
 }

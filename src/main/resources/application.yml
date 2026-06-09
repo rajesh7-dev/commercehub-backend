@@ -15,3 +15,20 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true   #makes /actuator/info show values
+
+# Custom app info
+info:
+  app:
+    name: CommerceHub
+    version: 1.0
+    developer: Rajesh
