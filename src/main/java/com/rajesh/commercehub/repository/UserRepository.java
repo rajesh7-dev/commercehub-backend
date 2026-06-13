@@ -1,11 +1,11 @@
-package com.rajesh.commercehub.auth.repository;
+package com.rajesh.commercehub.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.rajesh.commercehub.auth.entity.User;
+import com.rajesh.commercehub.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{

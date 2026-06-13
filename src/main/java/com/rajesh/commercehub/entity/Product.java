@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.entity;
+package com.rajesh.commercehub.entity;
 
 
 import jakarta.persistence.Entity;
@@ -38,6 +38,12 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
+    
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 
 
 }

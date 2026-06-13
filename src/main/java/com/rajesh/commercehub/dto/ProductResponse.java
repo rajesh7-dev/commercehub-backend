@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.dto;
+package com.rajesh.commercehub.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +14,6 @@ public class ProductResponse {
 	    private Double price;
 	    private Integer quantity;
 	    private String sellerName; 
+	    private String categoryName;
 
 }

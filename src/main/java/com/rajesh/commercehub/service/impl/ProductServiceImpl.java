@@ -1,20 +1,24 @@
-package com.rajesh.commercehub.auth.service.impl;
+package com.rajesh.commercehub.service.impl;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rajesh.commercehub.auth.dto.ProductRequest;
-import com.rajesh.commercehub.auth.dto.ProductResponse;
-import com.rajesh.commercehub.auth.entity.Product;
-import com.rajesh.commercehub.auth.entity.User;
-import com.rajesh.commercehub.auth.repository.ProductRepository;
-import com.rajesh.commercehub.auth.repository.UserRepository;
-import com.rajesh.commercehub.auth.service.ProductService;
+import com.rajesh.commercehub.dto.ProductRequest;
+import com.rajesh.commercehub.dto.ProductResponse;
+import com.rajesh.commercehub.entity.Category;
+import com.rajesh.commercehub.entity.Product;
+import com.rajesh.commercehub.entity.User;
 import com.rajesh.commercehub.mapper.ProductMapper;
+import com.rajesh.commercehub.repository.CategoryRepository;
+import com.rajesh.commercehub.repository.ProductRepository;
+import com.rajesh.commercehub.repository.UserRepository;
+import com.rajesh.commercehub.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,8 +36,11 @@ public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
     
     private final UserRepository userRepository;
+    
+    private final CategoryRepository categoryRepostiory;
 
-	
+
+    //Adding new product(SELLER, ADMIN )
 	@Transactional
 	@Override
 	public ProductResponse addProduct(ProductRequest request, String username) {
@@ -44,11 +51,16 @@ public class ProductServiceImpl implements ProductService{
         User seller = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        Category category = categoryRepostiory
+        		           .findById(request.getCategoryId())
+        		           .orElseThrow(() -> new RuntimeException("Category not found"));
 
          //DTO → Entity
          Product product = productMapper.toEntity(request);
          
          product.setSeller(seller);
+         
+         product.setCategory(category);
 
       
         Product saved = productRepository.save(product);
@@ -71,7 +83,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	
-	
+	 // Updating the product 
      @Transactional
 	 @Override
 	 public ProductResponse updateProduct(Long id, ProductRequest request, String username) {
@@ -113,6 +125,7 @@ public class ProductServiceImpl implements ProductService{
 		    return productMapper.toDto(updated);
 		}
 
+     //Delete product by Id
 	 @Override
 	 public void deleteProduct(Long id, String username) {
 		
@@ -135,6 +148,46 @@ public class ProductServiceImpl implements ProductService{
 		
 	 }
 
+	 //Fetching all products with Pagination
+	 @Override
+	 public Page<ProductResponse> getAllProducts(Pageable pageable) {
+		
+		return productRepository.findAll(pageable)
+				.map(productMapper::toDto);
+	 }
+
+	 
+	 //Search products by name
+	 @Override
+	 public Page<ProductResponse> searchProducts(String keyword, Pageable pageable) {
+
+		 return productRepository
+		            .findByNameContainingIgnoreCase(keyword, pageable)
+		            .map(productMapper::toDto);
+	 }
+
+	 
+	//Filtering products less than price
+	 @Override
+	 public Page<ProductResponse> filterByPrice(double price, Pageable pageable) {
+		
+		    return productRepository
+                         .findByPriceLessThan(price, pageable)
+                         .map(productMapper::toDto);
+	 }
+
+	 
+	 //Filtering products by category
+	 @Override
+	 public Page<ProductResponse> getProductsByCategory(Long categoryId, Pageable pageable) {
+
+		 return productRepository.findByCategory_Id(categoryId, pageable)
+				 .map(productMapper::toDto);
+	 }
+
+	 
+	 
+	
 	
 	
 	

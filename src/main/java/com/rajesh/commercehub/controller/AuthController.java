@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.controller;
+package com.rajesh.commercehub.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rajesh.commercehub.auth.dto.AuthResponse;
-import com.rajesh.commercehub.auth.dto.LoginRequest;
-import com.rajesh.commercehub.auth.dto.RegisterRequest;
-import com.rajesh.commercehub.auth.dto.UserResponse;
-import com.rajesh.commercehub.auth.service.AuthService;
+import com.rajesh.commercehub.dto.AuthResponse;
+import com.rajesh.commercehub.dto.LoginRequest;
+import com.rajesh.commercehub.dto.RegisterRequest;
+import com.rajesh.commercehub.dto.UserResponse;
+import com.rajesh.commercehub.service.AuthService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

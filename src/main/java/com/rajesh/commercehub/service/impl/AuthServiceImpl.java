@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.service.impl;
+package com.rajesh.commercehub.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,18 +7,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rajesh.commercehub.auth.dto.AuthResponse;
-import com.rajesh.commercehub.auth.dto.LoginRequest;
-import com.rajesh.commercehub.auth.dto.RegisterRequest;
-import com.rajesh.commercehub.auth.dto.UserResponse;
-import com.rajesh.commercehub.auth.entity.Role;
-import com.rajesh.commercehub.auth.entity.User;
-import com.rajesh.commercehub.auth.repository.RoleRepository;
-import com.rajesh.commercehub.auth.repository.UserRepository;
-import com.rajesh.commercehub.auth.service.AuthService;
+import com.rajesh.commercehub.dto.AuthResponse;
+import com.rajesh.commercehub.dto.LoginRequest;
+import com.rajesh.commercehub.dto.RegisterRequest;
+import com.rajesh.commercehub.dto.UserResponse;
+import com.rajesh.commercehub.entity.Role;
+import com.rajesh.commercehub.entity.User;
 import com.rajesh.commercehub.enums.RoleType;
 import com.rajesh.commercehub.mapper.UserMapper;
+import com.rajesh.commercehub.repository.RoleRepository;
+import com.rajesh.commercehub.repository.UserRepository;
 import com.rajesh.commercehub.security.JwtUtil;
+import com.rajesh.commercehub.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 

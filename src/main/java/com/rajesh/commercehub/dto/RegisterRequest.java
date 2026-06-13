@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.dto;
+package com.rajesh.commercehub.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

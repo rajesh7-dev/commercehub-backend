@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.entity;
+package com.rajesh.commercehub.entity;
 
 import com.rajesh.commercehub.enums.RoleType;
 

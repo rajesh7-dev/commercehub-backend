@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.controller;
+package com.rajesh.commercehub.controller;
 
 import java.util.List;
 
@@ -13,15 +13,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rajesh.commercehub.auth.dto.ProductRequest;
-import com.rajesh.commercehub.auth.dto.ProductResponse;
-import com.rajesh.commercehub.auth.service.ProductService;
+import com.rajesh.commercehub.dto.PaginationResponse;
+import com.rajesh.commercehub.dto.ProductRequest;
+import com.rajesh.commercehub.dto.ProductResponse;
+import com.rajesh.commercehub.service.ProductService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 @RestController
 @RequestMapping("/products")
@@ -39,7 +46,7 @@ public class ProductController {
 
     // public (USER access)
     @PreAuthorize("hasAnyRole('USER','SELLER','ADMIN')") 
-    @GetMapping
+    @GetMapping("/all")
     public List<ProductResponse> getProducts() {
         return productService.getAllProducts(); 
         
@@ -88,6 +95,89 @@ public String deleteProduct(@PathVariable Long id, Authentication auth) {
     productService.deleteProduct(id, auth.getName());
     return "Product deleted successfully";
 }
+
+
+
+@GetMapping
+   public PaginationResponse<ProductResponse> getAllProducts(Pageable pageable) {
+	
+       Page<ProductResponse> page = productService.getAllProducts(pageable);
+       
+       
+
+       return new PaginationResponse<>(
+                  page.getContent(),
+                  page.getNumber(),
+                  page.getSize(),
+                  page.getTotalElements(),
+                  page.getTotalPages(),
+                  page.isLast()
+          );
+
+       
+   }
+
+
+
+@GetMapping("/search")
+public PaginationResponse<ProductResponse> searchProducts(
+        @RequestParam String keyword,
+        Pageable pageable) {
+
+    Page<ProductResponse> page =
+            productService.searchProducts(keyword, pageable);
+
+    return new PaginationResponse<>(
+            page.getContent(),
+            page.getNumber(),
+            page.getSize(),
+            page.getTotalElements(),
+            page.getTotalPages(),
+            page.isLast()
+    );
+}
+
+
+
+@GetMapping("/filter")
+public PaginationResponse<ProductResponse> filterProducts(
+        @RequestParam double price,
+        Pageable pageable) {
+
+    Page<ProductResponse> page =
+            productService.filterByPrice(price, pageable);
+
+    return new PaginationResponse<>(
+            page.getContent(),
+            page.getNumber(),
+            page.getSize(),
+            page.getTotalElements(),
+            page.getTotalPages(),
+            page.isLast()
+    );
+}
+
+
+    @GetMapping("/by-category")
+    public PaginationResponse<ProductResponse> getProductsByCategory(
+    		@RequestParam Long categoryId,
+    		Pageable pageable){
+    	
+    	Page<ProductResponse> page = 
+    			productService.getProductsByCategory(categoryId, pageable);
+    	
+    	return new PaginationResponse<>(
+    			page.getContent(),
+    			page.getNumber(),
+    			page.getSize(),
+    			page.getTotalElements(),
+    			page.getTotalPages(),
+    			page.isLast()
+    			
+    		);	
+    			
+    }
+
 
 
 }

@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.entity;
+package com.rajesh.commercehub.entity;
 
 import java.time.LocalDateTime;
 

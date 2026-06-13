@@ -1,4 +1,4 @@
-package com.rajesh.commercehub.auth.dto;
+package com.rajesh.commercehub.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +18,9 @@ public class ProductRequest {
 	
 	@NotNull(message = "Quantity required")
     private Integer quantity;
+	
+	@NotNull
+	private Long categoryId;
 
 
 }
