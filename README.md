@@ -97,10 +97,10 @@ GET /products?page=0&size=5&sort=price,asc
 
 After login, use JWT token in request headers:
 
-
-Authorization: Bearer 
-
 ```
+Authorization: Bearer 
+```
+
 
 ## Swagger UI
 
