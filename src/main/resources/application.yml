@@ -24,7 +24,7 @@ management:
         include: "*"
   info:
     env:
-      enabled: true   #makes /actuator/info show values
+      enabled: true
 
 # Custom app info
 info:
@@ -32,3 +32,13 @@ info:
     name: CommerceHub
     version: 1.0
     developer: Rajesh
+
+# ✅ Logging configuration
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    com.rajesh.commercehub: DEBUG
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

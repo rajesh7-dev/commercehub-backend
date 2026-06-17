@@ -1,6 +1,55 @@
 # CommerceHub Backend API
 
-A scalable and secure backend application for an e-commerce platform built using **Spring Boot**, following clean architecture and industry best practices.
+A scalable, secure, and production-ready backend application for an e-commerce platform built using **Spring Boot**, following clean architecture and industry best practices.
+
+---
+
+## System Overview
+
+CommerceHub is a backend system designed to support core e-commerce operations such as user authentication, product management, cart handling, and order processing.
+
+The system follows a layered architecture with clear separation of concerns:
+- Controllers handle HTTP requests
+- Services manage business logic
+- Repositories interact with the database
+- Entities represent domain models
+
+It ensures secure access using JWT authentication and provides scalable REST APIs for frontend integration.
+
+---
+
+## Architecture
+
+The application follows a **layered architecture (Monolithic)**:
+
+```
+Client → Controller → Service → Repository → Database
+```
+
+### Layers:
+- **Controller Layer** – Handles incoming HTTP requests and responses  
+- **Service Layer** – Contains business logic and validations  
+- **Repository Layer** – Handles database interactions using Spring Data JPA  
+- **Entity Layer** – Defines database models  
+
+---
+
+### Key Principles:
+- Separation of concerns  
+- Clean API design  
+- Scalable structure  
+
+---
+
+## Highlights
+
+- End-to-end e-commerce backend implementation  
+- Secure authentication using JWT  
+- Clean architecture with proper layering  
+- DTO usage for safe API responses  
+- Cart → Order → Payment flow implemented  
+- SLF4J logging and Actuator monitoring  
+- Ready for microservices migration 
 
 ---
 
@@ -25,28 +74,60 @@ A scalable and secure backend application for an e-commerce platform built using
 - Create and manage categories
 - Assign products to categories
 - Fetch products by category
-- Supports frontend dropdown integration
+
+---
+
+### Search & Filtering
+- Search products by name (case-insensitive)
+- Filter by price range
+- Filter by category
+- Combined filtering support
 
 ---
 
 ### Pagination & Sorting
 - Efficient page-based data retrieval
-- Customizable page size and page number
-- Sorting by multiple fields (price, name, etc.)
+- Dynamic page size
+- Sorting by fields (price, name)
 - Supports multi-field sorting
 
 ---
 
-### Search & Filtering
-- Case-insensitive product search by name
-- Filter products by price
-- Filter products by category
-- Combine multiple filters for advanced queries
+### Cart Module
+- Add products to cart
+- Update item quantity
+- Remove items from cart
+- View cart details
+- Total price calculation
 
 ---
 
+### Order Module
+- Place order (checkout flow)
+- Convert cart → order
+- Store order items
+- Order history for users
+
+---
+
+### Payment Module (Mock)
+- Simulated payment processing
+- Integrated in checkout flow
+- Returns success for demonstration
+
+---
+
+### Monitoring & Logging
+- Spring Boot Actuator endpoints
+- SLF4J logging integration
+- Health, metrics, and info endpoints
+
+---
+
+
 ## Tech Stack
 
+- **Java 17**
 - **Spring Boot**
 - **Spring Security**
 - **JWT (JSON Web Token)**
@@ -55,6 +136,7 @@ A scalable and secure backend application for an e-commerce platform built using
 - **MySQL**
 - **Swagger (OpenAPI)**
 - **Spring Boot Actuator**
+- **SLF4J Logging**
 
 ---
 
@@ -85,6 +167,21 @@ POST /categories
 GET /categories
 ```
 
+### Cart APIs
+
+```
+POST   /cart/add
+PUT    /cart/update
+DELETE /cart/remove
+GET    /cart
+```
+
+### Order APIs
+
+```
+POST /orders/checkout
+GET  /orders
+```
 
 ## Pagination Example
 
@@ -101,17 +198,12 @@ After login, use JWT token in request headers:
 Authorization: Bearer 
 ```
 
-
 ## Swagger UI
-
-Access API documentation:
 
 ```
 http://localhost:8086/swagger-ui/index.html
 
 ```
-
-Use the **Authorize button** to enter JWT token and test secured APIs.
 
 
 
@@ -123,6 +215,8 @@ Use the **Authorize button** to enter JWT token and test secured APIs.
 /actuator/metrics
 ```
 
+---
+
 ## Transaction Management
 
 - Uses `@Transactional` for critical operations  
@@ -132,14 +226,15 @@ Use the **Authorize button** to enter JWT token and test secured APIs.
 
 ## Exception Handling
 
-- Global exception handling using a centralized handler  
-- Structured and consistent API error responses  
+- Global exception handler implemented  
+- Consistent API error responses  
 
 ---
 
 ## Validation
 
-- Request validation using Bean Validation annotations (`@NotNull`, `@NotBlank`, etc.)  
+- Request validation using Bean Validation  
+- (`@NotNull`, `@NotBlank`, etc.) 
 
 ---
 
@@ -149,6 +244,18 @@ Use the **Authorize button** to enter JWT token and test secured APIs.
 2. Configure database in `application.yml`  
 3. Run the Spring Boot application  
 4. Access Swagger UI  
+
+---
+
+## Future Scope
+
+- Real payment gateway integration (Stripe / Razorpay)
+- Order status tracking (PLACED, SHIPPED, DELIVERED)
+- Inventory management
+- Email notifications
+- Caching (Redis)
+- Microservices architecture migration
+- API Gateway & Service Discovery
 
 ---
 
